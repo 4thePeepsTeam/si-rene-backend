@@ -16,28 +16,27 @@ app.get("/", (req, res) => {
   res.json({ message: "ok" });
 });
 
-const db = require("./src/services/db");
-const { collection, getDocs } = require("firebase/firestore");
+const routes = require("./src/api/index");
+app.use("/api", routes);
 
-app.get("/test", async (req, res) => {
-  let result = [];
-  try {
-    const querySnapshot = await getDocs(collection(db, "user"));
-    querySnapshot.forEach((doc) => {
-      console.log(doc.data().location.coordinate._lat);
-      console.log(doc.data().location.coordinate._long);
-      result.push(`${doc.id} => ${doc.data().location.coordinate._lat}`);
-    });
-    res.json(result);
-  } catch (err) {
-    res.json(err);
-  }
-});
+// const db = require("./src/db/firebase");
+// const { collection, getDocs } = require("firebase/firestore");
 
-// const routes = require("./src/api");
-// app.use("/api", routes);
+// app.get("/test", async (req, res) => {
+//   let result = [];
+//   try {
+//     const querySnapshot = await getDocs(collection(db, "officer"));
+//     querySnapshot.forEach((doc) => {
+//       result.push(`${doc.id} => ${doc.data().location._lat}`);
+//       result.push(`${doc.id} => ${doc.data().location._long}`);
+//     });
+//     res.json(result);
+//   } catch (err) {
+//     res.json(err);
+//   }
+// });
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`server listening on port ${port}`);
 });
