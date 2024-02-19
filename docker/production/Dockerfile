@@ -1,17 +1,8 @@
-FROM node:12-alpine3.14
+FROM node:18-alpine as base
 
-ENV NODE_ENV production
-
+FROM base AS deps
 WORKDIR /app
-
 COPY package*.json ./
-
-USER node
-
 RUN npm install
 
 COPY . .
-
-EXPOSE 8000
-
-CMD [ "node", "app.js" ]
