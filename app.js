@@ -13,28 +13,11 @@ app.use(
 );
 
 app.get("/", (req, res) => {
-  res.json({ message: "ok" });
+  res.json({ message: "ok", appname: process.env.APP_NAME });
 });
 
 const routes = require("./src/api/index");
 app.use("/api", routes);
-
-// const db = require("./src/db/firebase");
-// const { collection, getDocs } = require("firebase/firestore");
-
-// app.get("/test", async (req, res) => {
-//   let result = [];
-//   try {
-//     const querySnapshot = await getDocs(collection(db, "officer"));
-//     querySnapshot.forEach((doc) => {
-//       result.push(`${doc.id} => ${doc.data().location._lat}`);
-//       result.push(`${doc.id} => ${doc.data().location._long}`);
-//     });
-//     res.json(result);
-//   } catch (err) {
-//     res.json(err);
-//   }
-// });
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

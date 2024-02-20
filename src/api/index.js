@@ -9,4 +9,9 @@ router.post("/ambulance/nearby", ambulanceService.nearby);
 router.post("/firefighter/nearby", firefighterService.nearby);
 router.post("/police/nearby", policeService.nearby);
 
+const apiTest = require("../utils/apiTest");
+
+router.get("/test/db", apiTest.dbTest);
+router.get("/test/routes-api", apiTest.routesApiTest);
+
 module.exports = router;
