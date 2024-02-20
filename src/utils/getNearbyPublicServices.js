@@ -31,8 +31,10 @@ async function getNearbyPublicServices({ currentPosition, type }) {
       // merge public service data and distance
       .map((publicService, index) => ({
         ...publicService,
-        routes: publicServicesDistance[index].routes[0],
+        routes: publicServicesDistance[index].routes?.[0] ?? null,
       }))
+      // remove service if route == null
+      .filter((publicService) => publicService.routes != null)
       // sort shortest distance
       .sort((a, b) => a.routes.distanceMeters - b.routes.distanceMeters)
       // select 3 nearest
