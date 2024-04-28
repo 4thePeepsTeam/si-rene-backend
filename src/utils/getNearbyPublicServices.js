@@ -40,7 +40,7 @@ async function getPublicServices({ type }) {
   try {
     const publicServices = [];
 
-    // read from db
+    // Read from Firestore
     const serviceRef = collection(db, "officer");
     const q = query(
       serviceRef,
@@ -49,11 +49,16 @@ async function getPublicServices({ type }) {
       where("isOnDuty", "==", false)
     );
     const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => publicServices.push(doc.data()));
+
+    querySnapshot.forEach((doc) => {
+      const serviceData = doc.data();
+      serviceData.id = doc.id; // Add document ID to the data object
+      publicServices.push(serviceData);
+    });
 
     return publicServices;
   } catch (error) {
-    throw error;
+    throw error; // Re-throw the error for proper handling
   }
 }
 
